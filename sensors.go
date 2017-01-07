@@ -17,6 +17,15 @@ func ReadSensors() (map[string]string, error) {
 	return parseOutput(output.String()), nil
 }
 
+func StripUnits(s string) string {
+	if strings.HasSuffix(s, "°C") {
+		return s[:len(s)-len("°C")]
+	} else if strings.HasSuffix(s, " RPM") {
+		return s[:len(s)-len(" RPM")]
+	}
+	return s
+}
+
 func parseOutput(out string) map[string]string {
 	res := map[string]string{}
 	lines := strings.Split(out, "\n")
